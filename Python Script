@@ -1,0 +1,38 @@
+import re
+
+# Example list of known invalid keys (for illustration purposes)
+known_invalid_keys = [
+    "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX",
+    "12345-12345-12345-12345-12345"
+]
+
+# Function to verify the format of the product key
+def verify_key_format(key):
+    pattern = re.compile(r'^[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}$')
+    return pattern.match(key)
+
+# Function to check if the key is known to be invalid
+def is_known_invalid_key(key):
+    return key in known_invalid_keys
+
+def check_product_key(key):
+    if not verify_key_format(key):
+        return "Invalid key format"
+    
+    if is_known_invalid_key(key):
+        return "Known invalid key"
+    
+    # For thorough verification, use Microsoft's activation services
+    return "Format valid. Check with Microsoft for authenticity."
+
+# Example keys to test
+keys_to_test = [
+    "AAAAA-BBBBB-CCCCC-DDDDD-EEEEE", # Valid format
+    "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX", # Known invalid key
+    "12345-12345-12345-12345-12345", # Known invalid key
+    "INVALID-KEY-EXAMPLE-12345-67890" # Invalid format
+]
+
+for key in keys_to_test:
+    result = check_product_key(key)
+    print(f"Key: {key} - {result}")
